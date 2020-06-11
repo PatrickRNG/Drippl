@@ -1,0 +1,34 @@
+{
+  "name": "water-routine-app",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "electron": "^9.0.2",
+    "react-scripts": "^3.4.1"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "homepage": "./",
+  "main": "src/electron-starter.js",
+  "scripts": {
+    "dev": "ELECTRON_START_URL=http://localhost:2000 electron .",
+    "start": "PORT=2000 react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "electron": "electron ."
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
