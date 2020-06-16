@@ -7,13 +7,14 @@
     "react-scripts": "^3.4.1"
   },
   "dependencies": {
+    "date-fns": "^2.14.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
   "homepage": "./",
   "main": "src/electron-starter.js",
   "scripts": {
-    "dev": "ELECTRON_START_URL=http://localhost:2000 electron .",
+    "dev": "ELECTRON_START_URL=http://localhost:2001 electron .",
     "start": "PORT=2000 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

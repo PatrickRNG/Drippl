@@ -6,7 +6,8 @@ const WaterDispatchContext = React.createContext();
 function waterReducer(state, action) {
   switch (action.type) {
     case 'add': {
-      return { water: state.water + action.payload.water };
+      const { water } = action.payload;
+      return {water: [...state.water, { value: water, createdAt: new Date() }]};
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
@@ -15,7 +16,14 @@ function waterReducer(state, action) {
 }
 
 function WaterProvider({ children }) {
-  const [state, dispatch] = useReducer(waterReducer, { water: 0 });
+  const [state, dispatch] = useReducer(waterReducer, {
+    water: [
+      {
+        value: 0,
+        createdAt: new Date(),
+      },
+    ],
+  });
 
   return (
     <WaterStateContext.Provider value={state}>
@@ -36,11 +44,11 @@ function useWaterState() {
 }
 
 function useWaterDispatch() {
-  const context = useContext(WaterDispatchContext)
+  const context = useContext(WaterDispatchContext);
   if (context === undefined) {
-    throw new Error('useWaterDispatch must be used within a CountProvider')
+    throw new Error('useWaterDispatch must be used within a CountProvider');
   }
-  return context
+  return context;
 }
 
 export { WaterProvider, useWaterState, useWaterDispatch };

@@ -57,7 +57,7 @@ const createWindow = () => {
       slashes: true,
     });
   window.loadURL(startUrl);
-  // window.webContents.openDevTools();
+  window.webContents.openDevTools({mode: 'detach'});
 
   // Emitted when the window is closed.
   window.on('closed', function () {
