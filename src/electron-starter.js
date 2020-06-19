@@ -32,14 +32,14 @@ const getWindowPosition = () => {
   // Position window 4 pixels vertically below the tray icon
   const y = Math.round(trayBounds.y + trayBounds.height + 4);
 
-  return { x: x, y: y };
+  return { x, y };
 };
 
 const createWindow = () => {
   // Create the browser window.
   window = new BrowserWindow({
     width: 400,
-    height: 400,
+    height: 800,
     show: false,
     frame: false,
     fullscreenable: false,
