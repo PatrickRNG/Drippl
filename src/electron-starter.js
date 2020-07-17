@@ -1,4 +1,5 @@
 const { app, BrowserWindow, Tray, ipcMain } = require('electron');
+const positioner = require('electron-traywindow-positioner');
 
 const path = require('path');
 const url = require('url');
@@ -65,13 +66,12 @@ const createWindow = () => {
   });
 };
 
-const toggleWindow = () => {
+const toggleWindow = (tray) => {
   window.isVisible() ? window.hide() : showWindow();
 };
 
 const showWindow = () => {
-  const position = getWindowPosition();
-  window.setPosition(position.x, position.y, false);
+  positioner.position(window);
   window.show();
 };
 

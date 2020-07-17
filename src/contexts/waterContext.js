@@ -7,7 +7,23 @@ function waterReducer(state, action) {
   switch (action.type) {
     case 'add': {
       const { water } = action.payload;
-      return {water: [...state.water, { value: water, createdAt: new Date() }]};
+      const waterArray = [
+        { value: water, createdAt: new Date() },
+        ...state.water,
+      ];
+
+      return {
+        water: waterArray,
+      };
+    }
+    case 'remove': {
+      const { index } = action.payload;
+      const updatedWaterArray = [...state.water];
+      updatedWaterArray.splice(index, 1);
+
+      return {
+        water: updatedWaterArray,
+      };
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
@@ -17,12 +33,7 @@ function waterReducer(state, action) {
 
 function WaterProvider({ children }) {
   const [state, dispatch] = useReducer(waterReducer, {
-    water: [
-      {
-        value: 0,
-        createdAt: new Date(),
-      },
-    ],
+    water: [],
   });
 
   return (
