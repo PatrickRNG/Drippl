@@ -1,5 +1,6 @@
-const { app, BrowserWindow, Tray, ipcMain } = require('electron');
+const { app, BrowserWindow, Tray, ipcMain, Notification } = require('electron');
 const positioner = require('electron-traywindow-positioner');
+const notifier = require('node-notifier');
 
 const path = require('path');
 const url = require('url');
@@ -9,31 +10,21 @@ const url = require('url');
 let tray = null;
 let window = null;
 
-const createTray = () => {
-  tray = new Tray(path.join(__dirname, 'assets', 'drop.png'));
-  tray.on('click', function (event) {
-    toggleWindow();
-  });
+const showWindow = () => {
+  positioner.position(window);
+  window.show();
 };
 
-app.on('ready', () => {
-  createWindow();
-  createTray();
-});
+const toggleWindow = () => {
+  if (window.isVisible()) return window.hide();
+  return showWindow();
+};
 
-const getWindowPosition = () => {
-  const windowBounds = window.getBounds();
-  const trayBounds = tray.getBounds();
-
-  // Center window horizontally below the tray icon
-  const x = Math.round(
-    trayBounds.x + trayBounds.width / 2 - windowBounds.width / 2
-  );
-
-  // Position window 4 pixels vertically below the tray icon
-  const y = Math.round(trayBounds.y + trayBounds.height + 4);
-
-  return { x, y };
+const createTray = () => {
+  tray = new Tray(path.join(__dirname, 'assets', 'drop.png'));
+  tray.on('click', () => {
+    toggleWindow();
+  });
 };
 
 const createWindow = () => {
@@ -46,7 +37,7 @@ const createWindow = () => {
     fullscreenable: false,
     resizable: false,
     skipTaskbar: true,
-    webPreferences: { nodeIntegration: false, backgroundThrottling: false },
+    webPreferences: { nodeIntegration: true, backgroundThrottling: false },
   });
 
   // Load the index.html of the app.
@@ -58,23 +49,23 @@ const createWindow = () => {
       slashes: true,
     });
   window.loadURL(startUrl);
-  window.webContents.openDevTools({mode: 'detach'});
+  window.webContents.openDevTools({ mode: 'detach' });
 
   // Emitted when the window is closed.
-  window.on('closed', function () {
+  window.on('closed', () => {
     window = null;
   });
 };
 
-const toggleWindow = (tray) => {
-  window.isVisible() ? window.hide() : showWindow();
-};
-
-const showWindow = () => {
-  positioner.position(window);
-  window.show();
-};
+app.on('ready', () => {
+  createWindow();
+  createTray();
+});
 
 ipcMain.on('show-window', () => {
   showWindow();
+});
+
+ipcMain.on('notification-config', (event, arg) => {
+  notifier.notify('Message > ' + arg);
 });

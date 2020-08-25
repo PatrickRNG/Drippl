@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useReducer, useContext } from 'react';
 
 const WaterStateContext = React.createContext();
@@ -20,6 +21,15 @@ function waterReducer(state, action) {
       const { index } = action.payload;
       const updatedWaterArray = [...state.water];
       updatedWaterArray.splice(index, 1);
+
+      return {
+        water: updatedWaterArray,
+      };
+    }
+    case 'edit': {
+      const { water, index } = action.payload;
+      const updatedWaterArray = [...state.water];
+      updatedWaterArray[index].value = water;
 
       return {
         water: updatedWaterArray,
