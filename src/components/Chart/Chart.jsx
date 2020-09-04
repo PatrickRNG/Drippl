@@ -5,32 +5,13 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import { buildWaterLabel } from 'utils/water';
 import { Wrapper, GraphWrapper, Gradient, CircleChart } from './styles';
 
-const electron = window.require('electron');
-
 const Chart = ({ water, objective, setObjective }) => {
   const totalWater =
     water.length &&
     water.map(({ value }) => value).reduce((prev, curr) => prev + curr);
 
-  const openConfig = () => {
-    electron.ipcRenderer.send('notification-config', 'test hey');
-  };
-
   return (
     <Wrapper>
-      <div
-        style={{
-          width: '30px',
-          height: '30px',
-          background: '#ccc',
-          padding: '10px',
-          position: 'absolute',
-          top: '0',
-          zIndex: '1',
-        }}
-        onClick={openConfig}
-        aria-hidden="true"
-      />
       <Gradient />
       <GraphWrapper>
         <CircleChart>

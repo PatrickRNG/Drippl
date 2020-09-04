@@ -71,3 +71,4 @@ export const CircleChart = styled.div`
     text-align: center;
   }
 `;
+

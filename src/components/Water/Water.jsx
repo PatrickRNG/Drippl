@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useWaterDispatch } from 'contexts/waterContext';
-import { WaterCard } from 'components';
+import { WaterCard, Button } from 'components';
 import { Flex, Input } from 'common/Elements';
 import { buildWaterLabel } from 'utils/water';
 
-import { Title, Button, Container, CardWrapper, WaterNumber } from './styles';
+import { Title, Container, CardWrapper, WaterNumber } from './styles';
 
 const Water = ({ water }) => {
   const dispatch = useWaterDispatch();

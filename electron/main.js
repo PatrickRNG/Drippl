@@ -1,14 +1,16 @@
-const { app, BrowserWindow, Tray, ipcMain, Notification } = require('electron');
+const { app, BrowserWindow, Tray, ipcMain } = require('electron');
 const positioner = require('electron-traywindow-positioner');
-const notifier = require('node-notifier');
-
 const path = require('path');
 const url = require('url');
+const { CronTime } = require('cron');
+const { getCronTime } = require('./utils/timer');
+const { createNotification } = require('./utils/notification');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let tray = null;
 let window = null;
+let job;
 
 const showWindow = () => {
   positioner.position(window);
@@ -60,12 +62,22 @@ const createWindow = () => {
 app.on('ready', () => {
   createWindow();
   createTray();
+  job = createNotification(getCronTime(), {
+    title: 'Water',
+    message: 'Time to drink water!',
+  });
 });
 
 ipcMain.on('show-window', () => {
   showWindow();
 });
 
-ipcMain.on('notification-config', (event, arg) => {
-  notifier.notify('Message > ' + arg);
+ipcMain.on('config', (event, arg) => {
+  const { notificationFrequency } = arg;
+  const cronTime = getCronTime(notificationFrequency);
+  // Update notification time config
+  if (job) {
+    job.setTime(new CronTime(cronTime));
+    job.start();
+  }
 });

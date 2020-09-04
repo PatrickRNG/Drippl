@@ -1,26 +1,29 @@
-import React, { useState } from 'react';
-import { Water, Chart } from 'components';
-import { WaterProvider, useWaterState } from './contexts/waterContext';
+import React from 'react';
+import { Main } from 'components';
+import { WaterProvider } from 'contexts/waterContext';
+import { ConfigProvider } from 'contexts/configContext';
+import { transitions, positions, Provider as AlertProvider } from 'react-alert';
+import AlertTemplate from 'react-alert-template-oldschool-dark';
 import { GlobalStyle } from './styles';
 
-const WaterDisplay = () => {
-  const { water } = useWaterState();
-  const [objective, setObjective] = useState(2000);
-
-  return (
-    <>
-      <Chart water={water} objective={objective} setObjective={setObjective} />
-      <Water water={water} objective={objective} />
-    </>
-  );
+const options = {
+  position: positions.BOTTOM_CENTER,
+  timeout: 3500,
+  offset: '30px',
+  transition: transitions.FADE,
+  type: 'success',
 };
 
 const App = () => {
   return (
-    <WaterProvider>
-      <GlobalStyle />
-      <WaterDisplay />
-    </WaterProvider>
+    <ConfigProvider>
+      <WaterProvider>
+        <AlertProvider template={AlertTemplate} {...options}>
+          <GlobalStyle />
+          <Main />
+        </AlertProvider>
+      </WaterProvider>
+    </ConfigProvider>
   );
 };
 

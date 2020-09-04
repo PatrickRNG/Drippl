@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import React, { useReducer, useContext } from 'react';
+import React, { useReducer, useContext, createContext } from 'react';
 
-const WaterStateContext = React.createContext();
-const WaterDispatchContext = React.createContext();
+const WaterStateContext = createContext();
+const WaterDispatchContext = createContext();
 
 function waterReducer(state, action) {
   switch (action.type) {

@@ -14,21 +14,25 @@
     "react-scripts": "^3.4.1"
   },
   "dependencies": {
+    "cron": "^1.8.2",
     "date-fns": "^2.15.0",
     "electron": "^9.2.0",
     "electron-traywindow-positioner": "^1.1.0",
+    "framer-motion": "^2.6.0",
     "node-notifier": "^8.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
+    "react-alert": "^7.0.2",
+    "react-alert-template-oldschool-dark": "^1.0.1",
     "react-circular-progressbar": "^2.0.3",
     "react-dom": "^16.13.1",
     "styled-components": "^5.1.1"
   },
   "homepage": "./",
-  "main": "src/electron-starter.js",
+  "main": "electron/main.js",
   "scripts": {
-    "dev": "ELECTRON_START_URL=http://localhost:2000 electron .",
-    "start": "PORT=2000 react-scripts start",
+    "start": "BROWSER=none PORT=2000 react-scripts start",
+    "start:electron": "ELECTRON_START_URL=http://localhost:2000 electron .",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "electron": "electron ."
