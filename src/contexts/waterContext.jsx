@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useReducer, useContext, createContext } from 'react';
+import { v4 as uuid } from 'uuid';
 
 const WaterStateContext = createContext();
 const WaterDispatchContext = createContext();
@@ -9,7 +10,7 @@ function waterReducer(state, action) {
     case 'add': {
       const { water } = action.payload;
       const waterArray = [
-        { value: water, createdAt: new Date() },
+        { id: uuid(), value: water, createdAt: new Date() },
         ...state.water,
       ];
 

@@ -5,7 +5,7 @@ import { Edit, Trash } from 'assets/icons';
 import { Flex, Input } from 'common/Elements';
 import { waterToNumber } from 'utils/water';
 import { useOutsideClick } from 'hooks';
-import { Card, WaterLabel, Date } from './styles';
+import { Card, WaterLabel, Date as CardDate } from './styles';
 
 const WaterCard = ({ value, date, editWater, removeWater }) => {
   const [editMode, setEditMode] = useState(false);
@@ -38,7 +38,12 @@ const WaterCard = ({ value, date, editWater, removeWater }) => {
   });
 
   return (
-    <Card>
+    <Card
+      layout="position"
+      initial={{ opacity: 0, y: 50, scale: 0.3 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+    >
       {editMode ? (
         <Input
           ref={ref}
@@ -70,9 +75,9 @@ const WaterCard = ({ value, date, editWater, removeWater }) => {
             <Trash />
           </span>
         </Flex>
-        <Date>
-          {format(date, 'dd/MM')} {format(date, 'hh:mm')}
-        </Date>
+        <CardDate>
+          {format(date, 'dd/MM')} {format(date, 'hh:mm a')}
+        </CardDate>
       </Flex>
     </Card>
   );

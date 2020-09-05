@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { AnimatePresence } from 'framer-motion';
 import { useWaterDispatch } from 'contexts/waterContext';
 import { WaterCard, Button } from 'components';
 import { Flex, Input } from 'common/Elements';
 import { buildWaterLabel } from 'utils/water';
 
-import { Title, Container, CardWrapper, WaterNumber } from './styles';
+import { Title, Wrapper, CardWrapper, WaterNumber } from './styles';
 
 const Water = ({ water }) => {
   const dispatch = useWaterDispatch();
@@ -49,34 +50,39 @@ const Water = ({ water }) => {
   };
 
   return (
-    <Container>
-      <Title>Consumption</Title>
-      <Flex justify="space-between" margin="0 0 15px 0">
-        {buildButtons([50, 200, 500, 1000])}
-      </Flex>
-      <Flex justify="space-between">
-        <WaterNumber>
-          <Input readOnly value={buildWaterLabel(waterNumber)} />
-          <span onClick={() => setWaterNumber(0)} aria-hidden="true">
-            &times;
-          </span>
-        </WaterNumber>
-        <Button secondary onClick={() => handleAddWater(waterNumber, 'ml')}>
-          Add
-        </Button>
-      </Flex>
+    <div>
+      <Wrapper>
+        <Title>Consumption</Title>
+        <Flex justify="space-between" margin="0 0 15px 0">
+          {buildButtons([50, 200, 500, 1000])}
+        </Flex>
+        <Flex justify="space-between">
+          <WaterNumber>
+            <Input readOnly value={buildWaterLabel(waterNumber)} />
+            <span onClick={() => setWaterNumber(0)} aria-hidden="true">
+              &times;
+            </span>
+          </WaterNumber>
+          <Button secondary onClick={() => handleAddWater(waterNumber, 'ml')}>
+            Add
+          </Button>
+        </Flex>
+      </Wrapper>
       <CardWrapper>
-        {water.map(({ value, createdAt }, index) => (
-          <WaterCard
-            key={createdAt.getTime()}
-            value={buildWaterLabel(value)}
-            date={createdAt}
-            editWater={(WaterValue) => editWater(WaterValue, index)}
-            removeWater={() => removeWater(index)}
-          />
-        ))}
+        <AnimatePresence>
+          {water.map(({ id, value, createdAt }, index) => (
+            <WaterCard
+              key={id}
+              layout="position"
+              value={buildWaterLabel(value)}
+              date={createdAt}
+              editWater={(WaterValue) => editWater(WaterValue, index)}
+              removeWater={() => removeWater(index)}
+            />
+          ))}
+        </AnimatePresence>
       </CardWrapper>
-    </Container>
+    </div>
   );
 };
 

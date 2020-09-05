@@ -1,10 +1,12 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
-export const Card = styled.div`
+export const Card = styled(motion.div)`
   padding: 15px 12px;
+  margin: 0 20px;
   background-color: #fff;
   border-radius: 4px;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.102);
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: space-between;
   margin-bottom: 12px;
@@ -19,5 +21,5 @@ export const WaterLabel = styled.div`
 
 export const Date = styled.div`
   font-size: 12px;
-  color: #c1c1c1;
+  color: #aaa;
 `;

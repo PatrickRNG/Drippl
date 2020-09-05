@@ -39,7 +39,10 @@ const Chart = ({ water, objective, setObjective }) => {
           <span>Objective</span>
           <input
             type="number"
-            onChange={(e) => setObjective(e.target.value || 2000)}
+            min={1}
+            onChange={(e) =>
+              e.target.value > 0 && setObjective(e.target.value || 2000)
+            }
             placeholder="Water in ml"
           />
         </div>

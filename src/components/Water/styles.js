@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Wrapper = styled.div`
   padding: 0 20px;
 `;
 
@@ -11,8 +11,9 @@ export const Title = styled.h2`
 `;
 
 export const CardWrapper = styled.div`
-  height: 100%;
+  height: 300px;
   margin-top: 15px;
+  overflow-y: auto;
 
   & .icon {
     cursor: pointer;
@@ -20,7 +21,7 @@ export const CardWrapper = styled.div`
 
     &.edit {
       transition: 2s;
-      fill: #c1c1c1;
+      fill: #aaa;
       margin-right: 10px;
       &:hover path {
         fill: #717171;
@@ -44,7 +45,7 @@ export const WaterNumber = styled.div`
     right: 0;
     cursor: pointer;
     font-size: 20px;
-    color: #c1c1c1;
+    color: #aaa;
     margin-right: 10px;
     transition: color 0.2s;
 
