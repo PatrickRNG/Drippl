@@ -63,7 +63,7 @@ const MenuNav = () => {
         >
           <Gear />
         </MenuButton>
-        <Navigation />
+        <Navigation setIsOpen={setIsOpen} />
       </Nav>
     </>
   );

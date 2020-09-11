@@ -2,15 +2,19 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { AnimatePresence } from 'framer-motion';
 import { useWaterDispatch } from 'contexts/waterContext';
+import { useConfigState } from 'contexts/configContext';
 import { WaterCard, Button } from 'components';
 import { Flex, Input } from 'common/Elements';
 import { buildWaterLabel } from 'utils/water';
-
+import { measurementType } from 'utils/constants';
 import { Title, Wrapper, CardWrapper, WaterNumber } from './styles';
 
 const Water = ({ water }) => {
   const dispatch = useWaterDispatch();
   const [waterNumber, setWaterNumber] = useState(0);
+  const {
+    options: { waterMeasurements },
+  } = useConfigState();
 
   const addWater = (value) =>
     dispatch({
@@ -30,17 +34,36 @@ const Water = ({ water }) => {
       payload: { water: Number(value), index },
     });
 
-  const buildButtons = (labels) =>
-    labels.map((label) => {
+  const getButtonLabels = (type) => {
+    const metric = measurementType.METRIC.map((label) => ({
+      name: buildWaterLabel(label.name),
+      value: label.value,
+    }));
+    switch (type) {
+      case 'common':
+        return measurementType.COMMON;
+      case 'metric':
+        return metric;
+      case 'imperial':
+        return measurementType.IMPERIAL;
+      default:
+        return metric;
+    }
+  };
+
+  const buildButtons = (type) => {
+    const labels = getButtonLabels(type);
+    return labels.map((label) => {
       return (
         <Button
           key={label}
-          onClick={() => setWaterNumber(waterNumber + Number(label))}
+          onClick={() => setWaterNumber(waterNumber + Number(label.value))}
         >
-          {buildWaterLabel(label)}
+          {label.name}
         </Button>
       );
     });
+  };
 
   const handleAddWater = (value) => {
     if (value > 0) {
@@ -54,7 +77,7 @@ const Water = ({ water }) => {
       <Wrapper>
         <Title>Consumption</Title>
         <Flex justify="space-between" margin="0 0 15px 0">
-          {buildButtons([50, 200, 500, 1000])}
+          {buildButtons(waterMeasurements)}
         </Flex>
         <Flex justify="space-between">
           <WaterNumber>

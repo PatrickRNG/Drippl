@@ -13,6 +13,7 @@ const MenuItem = ({
 }) => {
   const handleChange = (e) =>
     onChange({ property: name, value: e.target.value });
+
   const renderOption = () => {
     switch (type) {
       case 'select':

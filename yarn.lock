@@ -9000,11 +9000,6 @@ raw-body@2.4.0:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-react-alert-template-oldschool-dark@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/react-alert-template-oldschool-dark/-/react-alert-template-oldschool-dark-1.0.1.tgz#1788eaffc0953ca62ff45af36acdfca7cb426f93"
-  integrity sha512-dzM0MWnh6rN3u3BTIjC72DUbJzF6TcJbDRrOmfKyq/Ew/zty0HIscv1b5fC/eFUv45dfjsYyw5hVCGa6PjSzKQ==
-
 react-alert@^7.0.2:
   version "7.0.2"
   resolved "https://registry.yarnpkg.com/react-alert/-/react-alert-7.0.2.tgz#277b448c43a037a3ff5c82086e16867cadf98d05"

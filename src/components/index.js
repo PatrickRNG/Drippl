@@ -4,3 +4,4 @@ export { default as Water } from './Water/Water';
 export { default as Chart } from './Chart/Chart';
 export { default as MenuNav } from './MenuNav/MenuNav';
 export { default as Button } from './Button/Button';
+export { default as AlertTemplate } from './AlertTemplate/AlertTemplate';

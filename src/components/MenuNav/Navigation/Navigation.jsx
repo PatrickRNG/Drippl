@@ -36,14 +36,14 @@ const variantsNav = {
   },
 };
 
-const Navigation = () => {
+const Navigation = ({ setIsOpen }) => {
   const { options } = useConfigState();
   const dispatch = useConfigDispatch();
   const [currentOptions, setCurrentOptions] = useState(options);
   const alert = useAlert();
 
   const handleChange = ({ property, value }) => {
-    const option = { [property]: Number(value) };
+    const option = { [property]: value };
     setCurrentOptions({ ...currentOptions, ...option });
   };
 
@@ -63,7 +63,7 @@ const Navigation = () => {
       type: 'set',
       payload: { option: currentOptions },
     });
-    alert.show('Saved!');
+    alert.show('Settings saved!');
     localStorage.setItem(
       'config',
       JSON.stringify({
@@ -71,6 +71,7 @@ const Navigation = () => {
         ...currentOptions,
       })
     );
+    setIsOpen(false);
   };
 
   return (

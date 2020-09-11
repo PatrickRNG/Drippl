@@ -74,9 +74,9 @@ ipcMain.on('show-window', () => {
 
 ipcMain.on('config', (event, arg) => {
   const { notificationFrequency } = arg;
-  const cronTime = getCronTime(notificationFrequency);
+  const cronTime = getCronTime(Number(notificationFrequency));
   // Update notification time config
-  if (job) {
+  if (job && cronTime) {
     job.setTime(new CronTime(cronTime));
     job.start();
   }
