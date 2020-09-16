@@ -2,7 +2,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import { buildWaterLabel } from 'utils/water';
+import { buildWaterLabel } from 'client/utils/water';
 import { Wrapper, GraphWrapper, Gradient, CircleChart } from './styles';
 
 const Chart = ({ water, objective, setObjective }) => {

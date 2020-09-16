@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
-import { Edit, Trash } from 'assets/icons';
-import { Flex, Input } from 'common/Elements';
-import { waterToNumber } from 'utils/water';
-import { useOutsideClick } from 'hooks';
+import { Edit, Trash } from 'client/assets/icons';
+import { Flex, Input } from 'client/common/Elements';
+import { waterToNumber } from 'client/utils/water';
+import { useOutsideClick } from 'client/hooks';
 import { Card, WaterLabel, Date as CardDate } from './styles';
 
 const WaterCard = ({ value, date, editWater, removeWater }) => {

@@ -32,3 +32,18 @@ export const MenuButton = styled(motion.button)`
   z-index: 3;
   pointer-events: auto;
 `;
+
+export const QuitButton = styled(motion.a)`
+  position: absolute;
+  right: 20px;
+  top: 12px;
+  font-size: 14px;
+  color: #929292;
+  cursor: pointer;
+  z-index: 3;
+  transition: 0.15s;
+
+  &: hover {
+    color: #5a5a5a;
+  }
+`;

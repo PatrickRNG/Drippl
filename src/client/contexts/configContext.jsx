@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useReducer, useContext, createContext } from 'react';
-import { configs } from 'utils/config';
+import { configs } from 'client/utils/config';
 
 const ConfigStateContext = createContext();
 const ConfigDispatchContext = createContext();

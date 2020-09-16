@@ -1,7 +1,7 @@
 import React from 'react';
-import { Main, AlertTemplate } from 'components';
-import { WaterProvider } from 'contexts/waterContext';
-import { ConfigProvider } from 'contexts/configContext';
+import { Main, AlertTemplate } from 'client/components';
+import { WaterProvider } from 'client/contexts/waterContext';
+import { ConfigProvider } from 'client/contexts/configContext';
 import { transitions, positions, Provider as AlertProvider } from 'react-alert';
 import { GlobalStyle } from './styles';
 

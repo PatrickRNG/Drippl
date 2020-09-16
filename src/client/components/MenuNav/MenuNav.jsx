@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import { useCycle } from 'framer-motion';
-import { Gear } from 'assets/icons';
-import { useOutsideClick } from 'hooks';
+import { Gear } from 'client/assets/icons';
+import { useOutsideClick } from 'client/hooks';
 import Navigation from './Navigation/Navigation';
-import { Nav, MenuBackground, MenuButton } from './styles';
+import { Nav, MenuBackground, MenuButton, QuitButton } from './styles';
 
 const sidebar = {
   open: (height = 1000) => ({
@@ -36,7 +36,22 @@ const variants = {
   },
 };
 
-const MenuNav = () => {
+const quitVariants = {
+  open: {
+    opacity: 1,
+    transition: {
+      delay: 0.3,
+    },
+  },
+  closed: {
+    opacity: 0,
+    transition: {
+      delay: 0.3,
+    },
+  },
+};
+
+const MenuNav = ({ handleQuit }) => {
   const containerRef = useRef(null);
   const [isOpen, setIsOpen] = useCycle(false, true);
 
@@ -63,6 +78,9 @@ const MenuNav = () => {
         >
           <Gear />
         </MenuButton>
+        <QuitButton onClick={handleQuit} variants={quitVariants}>
+          Quit app
+        </QuitButton>
         <Navigation setIsOpen={setIsOpen} />
       </Nav>
     </>

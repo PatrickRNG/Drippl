@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { AnimatePresence } from 'framer-motion';
-import { useWaterDispatch } from 'contexts/waterContext';
-import { useConfigState } from 'contexts/configContext';
-import { WaterCard, Button } from 'components';
-import { Flex, Input } from 'common/Elements';
-import { buildWaterLabel } from 'utils/water';
-import { measurementType } from 'utils/constants';
+import { useWaterDispatch } from 'client/contexts/waterContext';
+import { useConfigState } from 'client/contexts/configContext';
+import { WaterCard, Button } from 'client/components';
+import { Flex, Input } from 'client/common/Elements';
+import { buildWaterLabel } from 'client/utils/water';
+import { measurementType } from 'client/utils/constants';
 import { Title, Wrapper, CardWrapper, WaterNumber } from './styles';
 
 const Water = ({ water }) => {
@@ -56,7 +56,7 @@ const Water = ({ water }) => {
     return labels.map((label) => {
       return (
         <Button
-          key={label}
+          key={label.value}
           onClick={() => setWaterNumber(waterNumber + Number(label.value))}
         >
           {label.name}

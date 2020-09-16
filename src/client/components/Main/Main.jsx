@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Water, Chart, MenuNav } from 'components';
-import { useWaterState } from 'contexts/waterContext';
-import { useConfigState } from 'contexts/configContext';
+import { Water, Chart, MenuNav } from 'client/components';
+import { useWaterState } from 'client/contexts/waterContext';
+import { useConfigState } from 'client/contexts/configContext';
+import { channels } from 'shared/constants';
 
-const electron = window.require('electron');
+const { ipcRenderer } = window.require('electron');
 
 const Main = () => {
   const { water } = useWaterState();
@@ -12,12 +13,16 @@ const Main = () => {
 
   useEffect(() => {
     // Send app configs to electrons
-    electron.ipcRenderer.send('config', options);
+    ipcRenderer.send(channels.CONFIG, options);
   }, [options]);
+
+  const onQuit = () => {
+    ipcRenderer.send(channels.QUIT);
+  };
 
   return (
     <>
-      <MenuNav />
+      <MenuNav handleQuit={onQuit} />
       <Chart water={water} objective={objective} setObjective={setObjective} />
       <Water water={water} objective={objective} />
     </>

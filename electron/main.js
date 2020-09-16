@@ -1,10 +1,12 @@
-const { app, BrowserWindow, Tray, ipcMain } = require('electron');
+/* eslint-disable import/no-extraneous-dependencies */
+const { app, BrowserWindow, Tray, ipcMain, Notification } = require('electron');
 const positioner = require('electron-traywindow-positioner');
 const path = require('path');
 const url = require('url');
 const { CronTime } = require('cron');
+const { channels } = require('../src/shared/constants');
 const { getCronTime } = require('./utils/timer');
-const { createNotification } = require('./utils/notification');
+const { startNotification } = require('./utils/notification');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -29,6 +31,16 @@ const createTray = () => {
   });
 };
 
+const setupNotification = () => {
+  const notification = new Notification({
+    title: 'Water',
+    body: 'Time to drink water!',
+    sound: true,
+  });
+  notification.addListener('click', showWindow);
+  job = startNotification(getCronTime(), notification);
+};
+
 const createWindow = () => {
   // Create the browser window.
   window = new BrowserWindow({
@@ -46,12 +58,16 @@ const createWindow = () => {
   const startUrl =
     process.env.ELECTRON_START_URL ||
     url.format({
-      pathname: path.join(__dirname, '/../build/index.html'),
+      pathname: path.join(__dirname, '../index.html'),
       protocol: 'file:',
       slashes: true,
     });
+
   window.loadURL(startUrl);
-  window.webContents.openDevTools({ mode: 'detach' });
+
+  if (process.env.ELECTRON_START_URL) {
+    window.webContents.openDevTools({ mode: 'detach' });
+  }
 
   // Emitted when the window is closed.
   window.on('closed', () => {
@@ -62,17 +78,14 @@ const createWindow = () => {
 app.on('ready', () => {
   createWindow();
   createTray();
-  job = createNotification(getCronTime(), {
-    title: 'Water',
-    message: 'Time to drink water!',
-  });
+  setupNotification();
 });
 
 ipcMain.on('show-window', () => {
   showWindow();
 });
 
-ipcMain.on('config', (event, arg) => {
+ipcMain.on(channels.CONFIG, (event, arg) => {
   const { notificationFrequency } = arg;
   const cronTime = getCronTime(Number(notificationFrequency));
   // Update notification time config
@@ -80,4 +93,8 @@ ipcMain.on('config', (event, arg) => {
     job.setTime(new CronTime(cronTime));
     job.start();
   }
+});
+
+ipcMain.on(channels.QUIT, () => {
+  app.quit();
 });

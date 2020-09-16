@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useAlert } from 'react-alert';
-import { Button } from 'components';
-import { configs } from 'utils/config';
-import { useConfigState, useConfigDispatch } from 'contexts/configContext';
+import { Button } from 'client/components';
+import { configs } from 'client/utils/config';
+import {
+  useConfigState,
+  useConfigDispatch,
+} from 'client/contexts/configContext';
 import MenuItem from '../MenuItem/MenuItem';
 import { List } from './styles';
 
@@ -54,7 +57,7 @@ const Navigation = ({ setIsOpen }) => {
         type: 'set',
         payload: { option: initialConfig },
       });
-      setCurrentOptions({ ...currentOptions, ...initialConfig });
+      setCurrentOptions((current) => ({ ...current, ...initialConfig }));
     }
   }, []);
 

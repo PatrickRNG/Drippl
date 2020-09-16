@@ -46,11 +46,7 @@ MenuItem.propTypes = {
   text: PropTypes.string.isRequired,
   value: PropTypes.any.isRequired,
   name: PropTypes.string.isRequired,
-  selectedValue: PropTypes.oneOfType([
-    PropTypes.string.isRequired,
-    PropTypes.number,
-    PropTypes.bool,
-  ]).isRequired,
+  selectedValue: PropTypes.any.isRequired,
   onChange: PropTypes.func.isRequired,
   variants: PropTypes.object.isRequired,
 };

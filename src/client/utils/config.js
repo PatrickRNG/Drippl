@@ -5,7 +5,7 @@ export const configs = [
     name: 'notificationFrequency',
     text: 'Notification Frequency',
     value: [
-      { name: 'Disable notifications', value: 0 },
+      { name: 'Disable notifications', value: true },
       { name: '30 min', value: 30 },
       { name: '1 hour', value: 60 },
       { name: '2 hours', value: 120 },
