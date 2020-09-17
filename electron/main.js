@@ -15,7 +15,7 @@ let window = null;
 let job;
 
 const showWindow = () => {
-  positioner.position(window);
+  positioner.position(window, tray.getBounds());
   window.show();
 };
 

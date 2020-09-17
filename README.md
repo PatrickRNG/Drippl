@@ -11,7 +11,7 @@ To build the project and create a runnable package, follow the following steps.
 
 #### Linux
 
-1. Run `$ yarn build` -> To build the React app
+1. Run `$ yarn build:client` -> To build the React app
 2. Run `$ yarn build:electron` -> To copy `electron` and `src/shared` folders to the `build` folder.
 3. Run the below command to build the app with Docker (so you don't need to have all the dependencies locally)
 
@@ -33,7 +33,7 @@ docker run --rm -ti \
 
 #### Windows
 
-1. Run `$ yarn build` -> To build the React app
+1. Run `$ yarn build:client` -> To build the React app
 2. Run `$ yarn build:electron` -> To copy `electron` and `src/shared` folders to the `build` folder.
 3. Run the below command to build the app with Docker (so you don't need to have all the dependencies locally)
 
