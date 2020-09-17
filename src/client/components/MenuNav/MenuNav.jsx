@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { useCycle } from 'framer-motion';
+import PropTypes from 'prop-types';
 import { Gear } from 'client/assets/icons';
 import { useOutsideClick } from 'client/hooks';
 import Navigation from './Navigation/Navigation';
@@ -85,6 +86,10 @@ const MenuNav = ({ handleQuit }) => {
       </Nav>
     </>
   );
+};
+
+MenuNav.propTypes = {
+  handleQuit: PropTypes.func.isRequired,
 };
 
 export default MenuNav;

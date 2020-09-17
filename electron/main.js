@@ -33,7 +33,7 @@ const createTray = () => {
 
 const setupNotification = () => {
   const notification = new Notification({
-    title: 'Water',
+    title: 'Water Routine',
     body: 'Time to drink water!',
     sound: true,
   });

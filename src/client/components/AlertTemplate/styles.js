@@ -20,5 +20,6 @@ export const Alert = styled.div`
     cursor: pointer;
     color: #999;
     background: none;
+    outline: none;
   }
 `;
