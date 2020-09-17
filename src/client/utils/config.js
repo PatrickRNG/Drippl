@@ -14,7 +14,7 @@ export const configs = [
   },
   {
     name: 'waterMeasurements',
-    text: 'Water measurement',
+    text: 'Buttons water measurement',
     value: [
       { name: 'Metric', value: 'metric' },
       { name: 'Imperial', value: 'imperial' },

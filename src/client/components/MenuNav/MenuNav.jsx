@@ -46,7 +46,7 @@ const quitVariants = {
   closed: {
     opacity: 0,
     transition: {
-      delay: 0.3,
+      delay: 0.2,
     },
   },
 };
