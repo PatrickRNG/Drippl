@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { AnimatePresence } from 'framer-motion';
-import { useWaterDispatch } from 'client/contexts/waterContext';
+import { useWaterDispatch, useWaterState } from 'client/contexts/waterContext';
 import { useConfigState } from 'client/contexts/configContext';
 import { WaterCard, Button } from 'client/components';
 import { Flex, Input } from 'client/common/Elements';
-import { buildWaterLabel } from 'client/utils/water';
+import { buildConvertedWaterLabel } from 'client/utils/water';
 import { measurementType } from 'client/utils/constants';
 import { Title, Wrapper, CardWrapper, WaterNumber } from './styles';
 
-const Water = ({ water }) => {
+const Water = () => {
+  const { water } = useWaterState();
   const dispatch = useWaterDispatch();
   const [waterNumber, setWaterNumber] = useState(0);
   const {
@@ -35,19 +35,15 @@ const Water = ({ water }) => {
     });
 
   const getButtonLabels = (type) => {
-    const metric = measurementType.METRIC.map((label) => ({
-      name: buildWaterLabel(label.name),
-      value: label.value,
-    }));
     switch (type) {
       case 'common':
         return measurementType.COMMON;
       case 'metric':
-        return metric;
+        return measurementType.METRIC;
       case 'imperial':
         return measurementType.IMPERIAL;
       default:
-        return metric;
+        return measurementType.METRIC;
     }
   };
 
@@ -81,7 +77,10 @@ const Water = ({ water }) => {
         </Flex>
         <Flex justify="space-between">
           <WaterNumber>
-            <Input readOnly value={buildWaterLabel(waterNumber)} />
+            <Input
+              readOnly
+              value={buildConvertedWaterLabel(waterNumber, waterMeasurements)}
+            />
             <span onClick={() => setWaterNumber(0)} aria-hidden="true">
               &times;
             </span>
@@ -97,7 +96,7 @@ const Water = ({ water }) => {
             <WaterCard
               key={id}
               layout="position"
-              value={buildWaterLabel(value)}
+              value={buildConvertedWaterLabel(value, waterMeasurements)}
               date={createdAt}
               editWater={(WaterValue) => editWater(WaterValue, index)}
               removeWater={() => removeWater(index)}
@@ -107,10 +106,6 @@ const Water = ({ water }) => {
       </CardWrapper>
     </div>
   );
-};
-
-Water.propTypes = {
-  water: PropTypes.array.isRequired,
 };
 
 export default Water;

@@ -3,26 +3,37 @@ import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import { Edit, Trash } from 'client/assets/icons';
 import { Flex, Input } from 'client/common/Elements';
-import { waterToNumber } from 'client/utils/water';
+import { waterToNumber, convertOzToMl } from 'client/utils/water';
+import { measurementNames } from 'client/utils/constants';
+import { useConfigState } from 'client/contexts/configContext';
 import { useOutsideClick } from 'client/hooks';
 import { Card, WaterLabel, Date as CardDate } from './styles';
 
 const WaterCard = ({ value, date, editWater, removeWater }) => {
+  const {
+    options: { waterMeasurements },
+  } = useConfigState();
   const [editMode, setEditMode] = useState(false);
-  const [water, setWater] = useState(waterToNumber(value));
-  const ref = useRef();
+  // Using this separate state, to be able to edit each water without conflict.
+  const [water, setWater] = useState(waterToNumber(value, waterMeasurements));
 
+  const ref = useRef();
   const handleEdit = () => {
     if (editMode) {
       setEditMode(false);
-      editWater(water);
+      if (waterMeasurements === measurementNames.IMPERIAL) {
+        console.log('>> water', water);
+        console.log('>> water 2', convertOzToMl(water));
+        return editWater(convertOzToMl(water));
+      }
+      return editWater(water);
     }
   };
 
   const handleFocus = (event) => event.target.select();
 
   useEffect(() => {
-    setWater(waterToNumber(value));
+    setWater(waterToNumber(value, waterMeasurements));
   }, [value]);
 
   useEffect(() => {

@@ -3,6 +3,12 @@ export const configTypes = {
   SELECT: 'select',
 };
 
+export const measurementNames = {
+  COMMON: 'commom',
+  METRIC: 'metric',
+  IMPERIAL: 'imperial',
+};
+
 export const measurementType = {
   COMMON: [
     { name: '1/2 cup', value: 120 },
@@ -11,15 +17,15 @@ export const measurementType = {
     { name: '1 liter', value: 1000 },
   ],
   METRIC: [
-    { name: '50', value: 50 },
-    { name: '200', value: 200 },
-    { name: '500', value: 500 },
-    { name: '1000', value: 1000 },
+    { name: '50 ml', value: 50 },
+    { name: '200 ml', value: 200 },
+    { name: '500 ml', value: 500 },
+    { name: '1 L', value: 1000 },
   ],
   IMPERIAL: [
-    { name: '4 oz', value: 120 },
-    { name: '8 oz', value: 240 },
-    { name: '16 oz', value: 500 },
-    { name: '32 oz', value: 1000 },
+    { name: '4 oz', value: 118.3431952662722 },
+    { name: '8 oz', value: 236.6863905325444 },
+    { name: '16 oz', value: 473.3727810650888 },
+    { name: '32 oz', value: 946.7455621301776 },
   ],
 };

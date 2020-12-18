@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "concurrently": "^5.3.0",
+    "cross-env": "^7.0.3",
     "electron": "^9.2.0",
     "electron-builder": "^22.8.0",
     "eslint-config-airbnb": "^18.2.0",
@@ -13,7 +15,8 @@
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.1.0",
     "prettier": "^2.1.0",
-    "react-scripts": "^3.4.1"
+    "react-scripts": "^3.4.1",
+    "wait-on": "^5.2.0"
   },
   "dependencies": {
     "cron": "^1.8.2",
@@ -32,8 +35,7 @@
   "productName": "Water Routine",
   "main": "electron/main.js",
   "scripts": {
-    "start:client": "BROWSER=none PORT=2000 react-scripts start",
-    "start:electron": "ELECTRON_START_URL=http://localhost:2000 electron .",
+    "start": "concurrently  \"cross-env BROWSER=none PORT=2000 react-scripts start\" \"wait-on http://localhost:2000 && ELECTRON_START_URL=http://localhost:2000 electron .\"",
     "build:client": "react-scripts build",
     "electron": "electron .",
     "build:electron": "rm -rf build/src build/shared && mkdir build/src && cp -r electron/. build/electron && cp -r src/shared/. build/src/shared",

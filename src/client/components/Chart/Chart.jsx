@@ -2,10 +2,17 @@ import 'react-circular-progressbar/dist/styles.css';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import { buildWaterLabel } from 'client/utils/water';
+import { buildConvertedWaterLabel } from 'client/utils/water';
+import { useWaterState } from 'client/contexts/waterContext';
+import { useConfigState } from 'client/contexts/configContext';
 import { Wrapper, GraphWrapper, Gradient, CircleChart } from './styles';
 
-const Chart = ({ water, objective, setObjective }) => {
+const Chart = ({ objective, setObjective }) => {
+  const { water } = useWaterState();
+  const {
+    options: { waterMeasurements },
+  } = useConfigState();
+
   const totalWater =
     water.length &&
     water.map(({ value }) => value).reduce((prev, curr) => prev + curr);
@@ -32,7 +39,10 @@ const Chart = ({ water, objective, setObjective }) => {
             {totalWater <= objective
               ? Math.round((totalWater / objective) * 100)
               : 100}
-            %<div className="totalWater">{buildWaterLabel(totalWater)}</div>
+            %
+            <div className="totalWater">
+              {buildConvertedWaterLabel(totalWater, waterMeasurements)}
+            </div>
           </div>
         </CircleChart>
         <div className="objective">
@@ -50,7 +60,6 @@ const Chart = ({ water, objective, setObjective }) => {
 };
 
 Chart.propTypes = {
-  water: PropTypes.array.isRequired,
   objective: PropTypes.number.isRequired,
   setObjective: PropTypes.func.isRequired,
 };
