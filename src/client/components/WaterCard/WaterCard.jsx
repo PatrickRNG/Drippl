@@ -22,8 +22,6 @@ const WaterCard = ({ value, date, editWater, removeWater }) => {
     if (editMode) {
       setEditMode(false);
       if (waterMeasurements === measurementNames.IMPERIAL) {
-        console.log('>> water', water);
-        console.log('>> water 2', convertOzToMl(water));
         return editWater(convertOzToMl(water));
       }
       return editWater(water);
@@ -34,7 +32,7 @@ const WaterCard = ({ value, date, editWater, removeWater }) => {
 
   useEffect(() => {
     setWater(waterToNumber(value, waterMeasurements));
-  }, [value]);
+  }, [value, waterMeasurements]);
 
   useEffect(() => {
     if (editMode) {

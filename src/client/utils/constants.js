@@ -1,6 +1,7 @@
 export const configTypes = {
   TEXT: 'text',
   SELECT: 'select',
+  NUMBER: 'number',
 };
 
 export const measurementNames = {

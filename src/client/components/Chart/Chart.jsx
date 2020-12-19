@@ -1,21 +1,43 @@
 import 'react-circular-progressbar/dist/styles.css';
 import React from 'react';
-import PropTypes from 'prop-types';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import { buildConvertedWaterLabel } from 'client/utils/water';
+import { buildConvertedWaterLabel, convertOzToMl } from 'client/utils/water';
+import { measurementNames } from 'client/utils/constants';
 import { useWaterState } from 'client/contexts/waterContext';
 import { useConfigState } from 'client/contexts/configContext';
 import { Wrapper, GraphWrapper, Gradient, CircleChart } from './styles';
 
-const Chart = ({ objective, setObjective }) => {
+const Chart = () => {
   const { water } = useWaterState();
   const {
-    options: { waterMeasurements },
+    options: { waterMeasurements, objective },
   } = useConfigState();
 
   const totalWater =
     water.length &&
     water.map(({ value }) => value).reduce((prev, curr) => prev + curr);
+
+  const buildConvertedObjective = (value) => {
+    switch (waterMeasurements) {
+      case measurementNames.METRIC:
+        return +value;
+      case measurementNames.IMPERIAL:
+        return convertOzToMl(+value);
+      default:
+        return +value;
+    }
+  };
+
+  const convertedObjective = buildConvertedObjective(objective);
+
+  const buildObjectivePercentage = () => {
+    return convertedObjective !== 0 && totalWater <= convertedObjective
+      ? Math.round((totalWater / convertedObjective) * 100)
+      : 100;
+  };
+
+  const percentageGraphLine =
+    convertedObjective !== 0 ? (totalWater / convertedObjective) * 100 : 100;
 
   return (
     <Wrapper>
@@ -25,43 +47,24 @@ const Chart = ({ objective, setObjective }) => {
           <CircularProgressbar
             strokeWidth={4}
             value={totalWater}
-            maxValue={objective}
+            maxValue={convertedObjective}
             styles={buildStyles({
               strokeLinecap: 'butt',
-              pathColor: `rgba(112, 211, 255, ${
-                (totalWater / objective) * 100
-              })`,
+              pathColor: `rgba(112, 211, 255, ${percentageGraphLine})`,
               textColor: '#707070',
               trailColor: '#F8F8F8',
             })}
           />
           <div className="chartText">
-            {totalWater <= objective
-              ? Math.round((totalWater / objective) * 100)
-              : 100}
-            %
+            {buildObjectivePercentage()}%
             <div className="totalWater">
               {buildConvertedWaterLabel(totalWater, waterMeasurements)}
             </div>
           </div>
         </CircleChart>
-        <div className="objective">
-          <span>Objective</span>
-          <input
-            type="number"
-            min={1}
-            onChange={(e) => setObjective(e.target.value || 2000)}
-            placeholder="Water in ml"
-          />
-        </div>
       </GraphWrapper>
     </Wrapper>
   );
-};
-
-Chart.propTypes = {
-  objective: PropTypes.number.isRequired,
-  setObjective: PropTypes.func.isRequired,
 };
 
 export default Chart;

@@ -10,14 +10,33 @@ const convertOzToMl = (ozValue) => ozValue / 0.0338;
 
 const convertToDecimal = (number) => Math.round(number * 100) / 100;
 
-const buildConvertedWaterLabel = (water, type) => {
+const formatNumber = (value) => Math.round(value * 100) / 100;
+
+const getMeasurementInitial = (type) => {
   switch (type) {
     case measurementNames.METRIC:
-      return water >= 1000 ? `${convertMlToL(water)} L` : `${water} ml`;
+      return 'ml';
+    case measurementNames.IMPERIAL:
+      return 'oz';
+    case measurementNames.COMMON:
+      return 'ml';
+    default:
+      return 'ml';
+  }
+};
+
+const buildConvertedWaterLabel = (water, type) => {
+  const metricLabel =
+    water >= 1000
+      ? `${formatNumber(convertMlToL(water))} L`
+      : `${formatNumber(water)} ml`;
+  switch (type) {
+    case measurementNames.METRIC:
+      return metricLabel;
     case measurementNames.IMPERIAL:
       return `${convertToDecimal(convertMlToOz(water))} oz`;
     default:
-      return water >= 1000 ? `${convertMlToL(water)} L` : `${water} ml`;
+      return metricLabel;
   }
 };
 
@@ -42,4 +61,5 @@ export {
   convertOzToMl,
   waterToNumber,
   buildConvertedWaterLabel,
+  getMeasurementInitial,
 };

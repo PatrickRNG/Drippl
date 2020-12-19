@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Item, Select } from './styles';
+import { getMeasurementInitial } from 'client/utils/water';
+import { Item, Select, Input } from './styles';
 
 const MenuItem = ({
   type,
@@ -10,6 +11,7 @@ const MenuItem = ({
   selectedValue,
   onChange,
   variants,
+  currentOptions,
 }) => {
   const handleChange = (e) =>
     onChange({ property: name, value: e.target.value });
@@ -28,14 +30,28 @@ const MenuItem = ({
         );
       default:
         return (
-          <input type={type} value={selectedValue} onChange={handleChange} />
+          <Input type={type} value={selectedValue} onChange={handleChange} />
         );
+    }
+  };
+
+  const renderOptionNames = (optionName) => {
+    switch (optionName) {
+      case 'objective':
+        return (
+          <div>
+            {text} (in {getMeasurementInitial(currentOptions.waterMeasurements)}
+            )
+          </div>
+        );
+      default:
+        return <div>{text}</div>;
     }
   };
 
   return (
     <Item variants={variants}>
-      <div>{text}</div>
+      {renderOptionNames(name)}
       {renderOption()}
     </Item>
   );
@@ -49,6 +65,7 @@ MenuItem.propTypes = {
   selectedValue: PropTypes.any.isRequired,
   onChange: PropTypes.func.isRequired,
   variants: PropTypes.object.isRequired,
+  currentOptions: PropTypes.object.isRequired,
 };
 
 export default MenuItem;

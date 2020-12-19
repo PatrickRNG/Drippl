@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useAlert } from 'react-alert';
 import { Button } from 'client/components';
 import { configs } from 'client/utils/config';
@@ -6,6 +7,7 @@ import {
   useConfigState,
   useConfigDispatch,
 } from 'client/contexts/configContext';
+import { measurementNames } from 'client/utils/constants';
 import MenuItem from '../MenuItem/MenuItem';
 import { List } from './styles';
 
@@ -41,7 +43,7 @@ const variantsNav = {
 
 const Navigation = ({ setIsOpen }) => {
   const { options } = useConfigState();
-  const dispatch = useConfigDispatch();
+  const dispatchConfig = useConfigDispatch();
   const [currentOptions, setCurrentOptions] = useState(options);
   const alert = useAlert();
 
@@ -53,16 +55,26 @@ const Navigation = ({ setIsOpen }) => {
   useEffect(() => {
     const initialConfig = JSON.parse(localStorage.getItem('config'));
     if (initialConfig) {
-      dispatch({
+      dispatchConfig({
         type: 'set',
         payload: { option: initialConfig },
       });
       setCurrentOptions((current) => ({ ...current, ...initialConfig }));
     }
-  }, []);
+  }, [dispatchConfig]);
+
+  // If imperial metric is used, change objetive to 64 oz, else, 2000 ml
+  useEffect(() => {
+    const isImperial =
+      currentOptions.waterMeasurements === measurementNames.IMPERIAL;
+    setCurrentOptions((current) => ({
+      ...current,
+      objective: isImperial ? 64 : 2000,
+    }));
+  }, [currentOptions.waterMeasurements]);
 
   const handleSave = () => {
-    dispatch({
+    dispatchConfig({
       type: 'set',
       payload: { option: currentOptions },
     });
@@ -91,6 +103,7 @@ const Navigation = ({ setIsOpen }) => {
             selectedValue={selectedValue}
             onChange={handleChange}
             variants={variantsItem}
+            currentOptions={currentOptions}
           />
         );
       })}
@@ -105,6 +118,10 @@ const Navigation = ({ setIsOpen }) => {
       </Button>
     </List>
   );
+};
+
+Navigation.propTypes = {
+  setIsOpen: PropTypes.func.isRequired,
 };
 
 export default Navigation;
