@@ -4,33 +4,48 @@ import { getMeasurementInitial } from 'client/utils/water';
 import { Item, Select, Input } from './styles';
 
 const MenuItem = ({
-  type,
-  text,
-  value,
-  name,
+  option,
   selectedValue,
   onChange,
   variants,
   currentOptions,
 }) => {
-  const handleChange = (e) =>
-    onChange({ property: name, value: e.target.value });
+  const { type, text, name, value } = option;
+
+  const handleChange = (property) => {
+    if (value !== undefined) onChange({ property: name, value: property });
+  };
 
   const renderOption = () => {
     switch (type) {
       case 'select':
         return (
-          <Select value={selectedValue} onChange={handleChange}>
-            {value.map((option) => (
-              <option key={option.name} value={option.value}>
-                {option.name}
+          <Select
+            value={selectedValue}
+            onChange={(e) => handleChange(e.target.value)}
+          >
+            {value.map((config) => (
+              <option key={config.name} value={config.value}>
+                {config.name}
               </option>
             ))}
           </Select>
         );
+      case 'checkbox':
+        return (
+          <Input
+            type={type}
+            checked={selectedValue}
+            onChange={(e) => handleChange(e.target.checked)}
+          />
+        );
       default:
         return (
-          <Input type={type} value={selectedValue} onChange={handleChange} />
+          <Input
+            type={type}
+            value={selectedValue}
+            onChange={(e) => handleChange(e.target.value)}
+          />
         );
     }
   };
@@ -58,10 +73,7 @@ const MenuItem = ({
 };
 
 MenuItem.propTypes = {
-  type: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-  value: PropTypes.any.isRequired,
-  name: PropTypes.string.isRequired,
+  option: PropTypes.object.isRequired,
   selectedValue: PropTypes.any.isRequired,
   onChange: PropTypes.func.isRequired,
   variants: PropTypes.object.isRequired,

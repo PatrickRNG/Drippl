@@ -13,6 +13,7 @@ const { startNotification } = require('./utils/notification');
 let tray = null;
 let window = null;
 let job;
+let hardcoreJob;
 
 const showWindow = () => {
   positioner.position(window, tray.getBounds());
@@ -34,11 +35,21 @@ const createTray = () => {
 const setupNotification = () => {
   const notification = new Notification({
     title: 'Water Routine',
-    body: 'Time to drink water!',
+    body: '',
     sound: true,
   });
   notification.addListener('click', showWindow);
-  job = startNotification(getCronTime(), notification);
+  job = startNotification(getCronTime(), notification, false);
+};
+
+const setupHardcoreNotification = () => {
+  const notification = new Notification({
+    title: 'Water Routine',
+    body: '',
+    sound: true,
+  });
+  notification.addListener('click', showWindow);
+  hardcoreJob = startNotification(getCronTime(), notification, true);
 };
 
 const createWindow = () => {
@@ -79,6 +90,7 @@ app.on('ready', () => {
   createWindow();
   createTray();
   setupNotification();
+  setupHardcoreNotification();
 });
 
 ipcMain.on('show-window', () => {
@@ -86,12 +98,19 @@ ipcMain.on('show-window', () => {
 });
 
 ipcMain.on(channels.CONFIG, (event, arg) => {
-  const { notificationFrequency } = arg;
+  const { notificationFrequency, hardcore } = arg;
   const cronTime = getCronTime(Number(notificationFrequency));
   // Update notification time config
-  if (job && cronTime) {
-    job.setTime(new CronTime(cronTime));
-    job.start();
+  if (cronTime) {
+    if (job && !hardcore) {
+      hardcoreJob.stop();
+      job.setTime(new CronTime(cronTime));
+      job.start();
+    } else if (hardcoreJob && hardcore) {
+      job.stop();
+      hardcoreJob.setTime(new CronTime(cronTime));
+      hardcoreJob.start();
+    }
   }
 });
 

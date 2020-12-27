@@ -96,10 +96,7 @@ const Navigation = ({ setIsOpen }) => {
         return (
           <MenuItem
             key={option.name}
-            type={option.type}
-            text={option.text}
-            name={option.name}
-            value={option.value}
+            option={option}
             selectedValue={selectedValue}
             onChange={handleChange}
             variants={variantsItem}

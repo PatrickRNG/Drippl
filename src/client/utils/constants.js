@@ -2,6 +2,7 @@ export const configTypes = {
   TEXT: 'text',
   SELECT: 'select',
   NUMBER: 'number',
+  CHECKBOX: 'checkbox',
 };
 
 export const measurementNames = {
