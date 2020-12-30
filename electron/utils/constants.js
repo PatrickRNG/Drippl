@@ -17,19 +17,6 @@ const notificationMessages = [
   "Do not ignore this notification, it's time to get hydrated!",
 ];
 
-const hardcoreNotificationMessages = [
-  "If you don't drink water right NOW, I will rip your ear off and eat it!",
-  'SWALLOW that water RIGHT NOW!!',
-  'You better drink that water or I will punch your throat',
-  "You think you're better than me?? NO you're NOT! I'm hydrated and I'm seeing that fucking EMPTY bottle in your desk, you better go to the kitchen right now or you will see me behind you in 5 seconds.",
-  "Okay maybe I'm being too rough... NO I'M NOT!! DRINK THAT WATER RIGHT NOW!!!",
-  "I'm watching you, you better drink that water",
-  'You want to die? No? Then grab that bottle and drink it',
-  "Look at you, with that almost empty water bottle in your desk, I'm ashamed for you",
-  'Drink that water right now or I will throw the bottle inside your throat',
-];
-
 module.exports = {
   notificationMessages,
-  hardcoreNotificationMessages,
 };

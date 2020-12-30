@@ -4,12 +4,11 @@ import { motion } from 'framer-motion';
 export const Card = styled(motion.div)`
   padding: 15px 12px;
   margin: 0 20px;
-  background-color: #fff;
   border-radius: 4px;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 6px 20px rgba(111, 111, 111, 0.15);
   display: flex;
   justify-content: space-between;
-  margin-bottom: 12px;
+  margin-top: 12px;
   min-height: 78px;
 `;
 

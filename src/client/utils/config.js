@@ -24,16 +24,8 @@ export const configs = [
       { name: '1 hour', value: 60 },
       { name: '2 hours', value: 120 },
       { name: '30 min', value: 30 },
-      { name: 'Test', value: 10 },
       { name: 'Disable notifications', value: true },
     ],
     type: configTypes.SELECT,
-  },
-  {
-    name: 'hardcore',
-    text: 'Activate hardcore mode',
-    value: false,
-    type: configTypes.CHECKBOX,
-    confirm: true,
   },
 ];
