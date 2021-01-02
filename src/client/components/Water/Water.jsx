@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { useWaterDispatch, useWaterState } from 'client/contexts/waterContext';
 import { useConfigState } from 'client/contexts/configContext';

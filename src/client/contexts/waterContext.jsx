@@ -36,6 +36,11 @@ function waterReducer(state, action) {
         water: updatedWaterArray,
       };
     }
+    case 'reset': {
+      return {
+        water: [],
+      };
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }

@@ -94,6 +94,15 @@ ipcMain.on(channels.CONFIG, (event, arg) => {
   }
 });
 
-ipcMain.on(channels.QUIT, () => {
+ipcMain.handle(channels.QUIT, () => {
   app.quit();
+});
+
+ipcMain.handle(channels.NOTIFICATE, (event, arg) => {
+  const notification = new Notification({
+    title: 'Water Routine',
+    body: arg,
+    sound: true,
+  });
+  notification.show();
 });
