@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { endOfDay, isAfter, subMinutes } from 'date-fns';
-import { Water, Chart, MenuNav } from 'client/components';
+import { Water, Chart, MenuNav, Success } from 'client/components';
 import { useWaterDispatch, useWaterState } from 'client/contexts/waterContext';
 import { useConfigState } from 'client/contexts/configContext';
 import { channels } from 'shared/constants';
@@ -9,6 +9,8 @@ const { ipcRenderer } = window.require('electron');
 
 const Main = () => {
   const { options } = useConfigState();
+  const { totalWater } = useWaterState();
+  const hasCompleted = totalWater >= options.objective;
   const dispatch = useWaterDispatch();
 
   useEffect(() => {
@@ -17,7 +19,7 @@ const Main = () => {
   }, [options]);
 
   useEffect(() => {
-    const today = new Date()
+    const today = new Date();
     const dayEnd = endOfDay(new Date());
     const minutesToEndDay = subMinutes(dayEnd, 10);
     const intervalId = setInterval(() => {
@@ -33,7 +35,7 @@ const Main = () => {
           'The day is about to end, update your water consumption!'
         );
       }
-    }, 60000)
+    }, 60000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -41,13 +43,13 @@ const Main = () => {
   const onQuit = () => {
     ipcRenderer.invoke(channels.QUIT);
   };
-  
 
   return (
     <>
       <MenuNav handleQuit={onQuit} />
       <Chart />
       <Water />
+      <Success hasCompleted={hasCompleted} />
     </>
   );
 };

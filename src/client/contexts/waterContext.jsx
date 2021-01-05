@@ -16,6 +16,7 @@ function waterReducer(state, action) {
 
       return {
         water: waterArray,
+        totalWater: waterArray.reduce((acc, curr) => acc + curr.value, 0),
       };
     }
     case 'remove': {
@@ -25,6 +26,10 @@ function waterReducer(state, action) {
 
       return {
         water: updatedWaterArray,
+        totalWater: updatedWaterArray.reduce(
+          (acc, curr) => acc + curr.value,
+          0
+        ),
       };
     }
     case 'edit': {
@@ -34,11 +39,16 @@ function waterReducer(state, action) {
 
       return {
         water: updatedWaterArray,
+        totalWater: updatedWaterArray.reduce(
+          (acc, curr) => acc + curr.value,
+          0
+        ),
       };
     }
     case 'reset': {
       return {
         water: [],
+        totalWater: 0,
       };
     }
     default: {
@@ -50,6 +60,7 @@ function waterReducer(state, action) {
 function WaterProvider({ children }) {
   const [state, dispatch] = useReducer(waterReducer, {
     water: [],
+    totalWater: 0,
   });
 
   return (
