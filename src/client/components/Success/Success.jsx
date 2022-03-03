@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import propTypes from 'prop-types';
 import Checkmark from 'client/assets/icons/Checkmark';
 import { useOutsideClick } from 'client/hooks';
 import { Background, SuccessWrapper, Close } from './styles';
@@ -10,7 +11,7 @@ const Success = ({ hasCompleted }) => {
   useEffect(() => {
     setTimeout(() => {
       setIsOpen(hasCompleted);
-    }, 1000)
+    }, 1000);
   }, [hasCompleted]);
 
   useOutsideClick(containerRef, () => {
@@ -31,6 +32,14 @@ const Success = ({ hasCompleted }) => {
       </>
     )
   );
+};
+
+Success.propTypes = {
+  hasCompleted: propTypes.bool,
+};
+
+Success.defaultProps = {
+  hasCompleted: false,
 };
 
 export default Success;

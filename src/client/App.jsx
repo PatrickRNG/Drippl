@@ -13,17 +13,15 @@ const options = {
   type: 'success',
 };
 
-const App = () => {
-  return (
-    <ConfigProvider>
-      <WaterProvider>
-        <AlertProvider template={AlertTemplate} {...options}>
-          <GlobalStyle />
-          <Main />
-        </AlertProvider>
-      </WaterProvider>
-    </ConfigProvider>
-  );
-};
+const App = () => (
+  <ConfigProvider>
+    <WaterProvider>
+      <AlertProvider template={AlertTemplate} {...options}>
+        <GlobalStyle />
+        <Main />
+      </AlertProvider>
+    </WaterProvider>
+  </ConfigProvider>
+);
 
 export default App;

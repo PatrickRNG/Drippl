@@ -50,7 +50,13 @@ const createWindow = () => {
     fullscreenable: false,
     resizable: false,
     skipTaskbar: true,
-    webPreferences: { nodeIntegration: true, backgroundThrottling: false },
+    webPreferences: {
+      nodeIntegration: false, // is default value after Electron v5
+      contextIsolation: true, // protect against prototype pollution
+      enableRemoteModule: false, // turn off remote
+      backgroundThrottling: false,
+      preload: path.join(__dirname, 'preload.js'),
+    },
   });
 
   // Load the index.html of the app.

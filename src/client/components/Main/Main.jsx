@@ -1,21 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { endOfDay, isAfter, subMinutes } from 'date-fns';
 import { Water, Chart, MenuNav, Success } from 'client/components';
 import { useWaterDispatch, useWaterState } from 'client/contexts/waterContext';
 import { useConfigState } from 'client/contexts/configContext';
+import { measurementNames } from 'client/utils/constants';
 import { channels } from 'shared/constants';
-
-const { ipcRenderer } = window.require('electron');
+import { convertMlToOz } from 'client/utils/water';
 
 const Main = () => {
   const { options } = useConfigState();
   const { totalWater } = useWaterState();
-  const hasCompleted = totalWater >= options.objective;
+  const hasCompleted = useMemo(() => {
+    const isImperial = options.waterMeasurements === measurementNames.IMPERIAL;
+    const convertedTotalWater = isImperial
+      ? convertMlToOz(totalWater)
+      : totalWater;
+
+    return convertedTotalWater >= options.objective;
+  }, [totalWater, options.objective]);
+
   const dispatch = useWaterDispatch();
 
   useEffect(() => {
     // Send app configs to electron
-    ipcRenderer.send(channels.CONFIG, options);
+    window.electron.message.send(channels.CONFIG, options);
   }, [options]);
 
   useEffect(() => {
@@ -30,7 +38,7 @@ const Main = () => {
         });
       }
       if (isAfter(today, minutesToEndDay)) {
-        ipcRenderer.invoke(
+        window.electron.message.invoke(
           channels.NOTIFICATE,
           'The day is about to end, update your water consumption!'
         );
@@ -41,7 +49,7 @@ const Main = () => {
   }, []);
 
   const onQuit = () => {
-    ipcRenderer.invoke(channels.QUIT);
+    window.electron.message.invoke(channels.QUIT);
   };
 
   return (

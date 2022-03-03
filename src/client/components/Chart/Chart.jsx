@@ -30,11 +30,10 @@ const Chart = () => {
 
   const convertedObjective = buildConvertedObjective(objective);
 
-  const buildObjectivePercentage = () => {
-    return convertedObjective !== 0 && totalWater <= convertedObjective
+  const buildObjectivePercentage = () =>
+    convertedObjective !== 0 && totalWater <= convertedObjective
       ? Math.round((totalWater / convertedObjective) * 100)
       : 100;
-  };
 
   const percentageGraphLine =
     convertedObjective !== 0 ? (totalWater / convertedObjective) * 100 : 100;

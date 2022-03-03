@@ -5,7 +5,7 @@ import { v4 as uuid } from 'uuid';
 const WaterStateContext = createContext();
 const WaterDispatchContext = createContext();
 
-function waterReducer(state, action) {
+const waterReducer = (state, action) => {
   switch (action.type) {
     case 'add': {
       const { water } = action.payload;
@@ -55,9 +55,9 @@ function waterReducer(state, action) {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
   }
-}
+};
 
-function WaterProvider({ children }) {
+const WaterProvider = ({ children }) => {
   const [state, dispatch] = useReducer(waterReducer, {
     water: [],
     totalWater: 0,
@@ -70,23 +70,23 @@ function WaterProvider({ children }) {
       </WaterDispatchContext.Provider>
     </WaterStateContext.Provider>
   );
-}
+};
 
-function useWaterState() {
+const useWaterState = () => {
   const context = useContext(WaterStateContext);
   if (context === undefined) {
     throw new Error('useWaterState must be used within a WaterProvider');
   }
 
   return context;
-}
+};
 
-function useWaterDispatch() {
+const useWaterDispatch = () => {
   const context = useContext(WaterDispatchContext);
   if (context === undefined) {
     throw new Error('useWaterDispatch must be used within a CountProvider');
   }
   return context;
-}
+};
 
 export { WaterProvider, useWaterState, useWaterDispatch };

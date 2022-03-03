@@ -63,28 +63,26 @@ const MenuNav = ({ handleQuit }) => {
   });
 
   return (
-    <>
-      <Nav
-        initial={false}
-        animate={isOpen ? 'open' : 'closed'}
-        ref={containerRef}
-        open={isOpen}
+    <Nav
+      initial={false}
+      animate={isOpen ? 'open' : 'closed'}
+      ref={containerRef}
+      open={isOpen}
+    >
+      <MenuBackground className="background" variants={sidebar} />
+      <MenuButton
+        whileHover="hover"
+        variants={variants}
+        type="button"
+        onClick={setIsOpen}
       >
-        <MenuBackground className="background" variants={sidebar} />
-        <MenuButton
-          whileHover="hover"
-          variants={variants}
-          type="button"
-          onClick={setIsOpen}
-        >
-          <Gear />
-        </MenuButton>
-        <QuitButton onClick={handleQuit} variants={quitVariants}>
-          Quit app
-        </QuitButton>
-        <Navigation setIsOpen={setIsOpen} />
-      </Nav>
-    </>
+        <Gear />
+      </MenuButton>
+      <QuitButton onClick={handleQuit} variants={quitVariants}>
+        Quit app
+      </QuitButton>
+      <Navigation setIsOpen={setIsOpen} />
+    </Nav>
   );
 };
 

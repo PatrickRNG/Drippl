@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { useWaterDispatch, useWaterState } from 'client/contexts/waterContext';
 import { useConfigState } from 'client/contexts/configContext';
@@ -49,16 +49,14 @@ const Water = () => {
 
   const buildButtons = (type) => {
     const labels = getButtonLabels(type);
-    return labels.map((label) => {
-      return (
-        <Button
-          key={label.value}
-          onClick={() => setWaterNumber(waterNumber + Number(label.value))}
-        >
-          {label.name}
-        </Button>
-      );
-    });
+    return labels.map((label) => (
+      <Button
+        key={label.value}
+        onClick={() => setWaterNumber(waterNumber + Number(label.value))}
+      >
+        {label.name}
+      </Button>
+    ));
   };
 
   const handleAddWater = (value) => {

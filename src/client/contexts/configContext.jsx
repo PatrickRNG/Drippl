@@ -5,7 +5,7 @@ import { configs } from 'client/utils/config';
 const ConfigStateContext = createContext();
 const ConfigDispatchContext = createContext();
 
-function configReducer(state, action) {
+const configReducer = (state, action) => {
   switch (action.type) {
     case 'set': {
       const { option } = action.payload;
@@ -21,9 +21,9 @@ function configReducer(state, action) {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
   }
-}
+};
 
-function ConfigProvider({ children }) {
+const ConfigProvider = ({ children }) => {
   const allOptions = configs.reduce((acc, curr) => {
     const value = curr?.value[0]?.value ? curr.value[0].value : curr.value;
     acc[curr.name] = value;
@@ -40,23 +40,23 @@ function ConfigProvider({ children }) {
       </ConfigDispatchContext.Provider>
     </ConfigStateContext.Provider>
   );
-}
+};
 
-function useConfigState() {
+const useConfigState = () => {
   const context = useContext(ConfigStateContext);
   if (context === undefined) {
     throw new Error('useConfigState must be used within a WaterProvider');
   }
 
   return context;
-}
+};
 
-function useConfigDispatch() {
+const useConfigDispatch = () => {
   const context = useContext(ConfigDispatchContext);
   if (context === undefined) {
     throw new Error('useConfigDispatch must be used within a CountProvider');
   }
   return context;
-}
+};
 
 export { ConfigProvider, useConfigState, useConfigDispatch };
