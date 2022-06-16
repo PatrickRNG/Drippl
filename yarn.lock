@@ -4145,10 +4145,10 @@ electron-traywindow-positioner@^1.1.0:
   resolved "https://registry.yarnpkg.com/electron-traywindow-positioner/-/electron-traywindow-positioner-1.1.1.tgz#0c99aa91cc8680bdec6358af44ae6e4f477d65d7"
   integrity sha512-z3GGSaaAJf8HnY9lyAFae3o89+Sfg2zHFrJE9AUgOosQ0rqQsx48V3nzcjrmXCm994meNhjLjgq/Q916LdSLqg==
 
-electron@^17.1.0:
-  version "17.1.0"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-17.1.0.tgz#7539937d294413af8efba69dc370cf7d2b0cdc72"
-  integrity sha512-X/qdldmQ8lA15NmeraubWCTtMeTO8K9Ser0wtSCgOXVh53Sr1Ea0VQQ7Q9LuGgWRVz4qtr40cntuEdM8icdmTw==
+electron@^15.5.5:
+  version "15.5.5"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-15.5.5.tgz#796b7822bfb2b045b504e40657674f2869361681"
+  integrity sha512-cGS1ueek14WLvLJlJbId3fmqJLvkr7VuBI0hHt6gpKaj8m2iv/NMteRg0deLgwlxjEF6ZGGNerUJW6a96rNq/Q==
   dependencies:
     "@electron/get" "^1.13.0"
     "@types/node" "^14.6.2"
